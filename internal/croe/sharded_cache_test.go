@@ -5,7 +5,7 @@ import (
 
 	"github.com/shopspring/decimal"
 
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/math_node"
+	"github.com/ZHOUXING1997/math_calculation/internal/math_node"
 )
 
 func TestShardedLRUCache(t *testing.T) {

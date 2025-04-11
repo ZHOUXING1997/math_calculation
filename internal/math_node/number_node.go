@@ -5,8 +5,8 @@ import (
 
 	"github.com/shopspring/decimal"
 
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/math_utils"
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/math_config"
+	"github.com/ZHOUXING1997/math_calculation/internal/math_utils"
+	"github.com/ZHOUXING1997/math_calculation/math_config"
 )
 
 // NumberNode 数字节点

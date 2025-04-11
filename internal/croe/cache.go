@@ -4,7 +4,7 @@ import (
 	"container/list"
 	"sync"
 
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/math_node"
+	"github.com/ZHOUXING1997/math_calculation/internal/math_node"
 )
 
 // LRUCacheItem LRU缓存项

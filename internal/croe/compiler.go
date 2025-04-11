@@ -7,10 +7,11 @@ import (
 
 	"github.com/shopspring/decimal"
 
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal"
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/math_node"
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/math_utils"
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/math_config"
+	"github.com/ZHOUXING1997/math_calculation/math_config"
+
+	"github.com/ZHOUXING1997/math_calculation/internal"
+	"github.com/ZHOUXING1997/math_calculation/internal/math_node"
+	"github.com/ZHOUXING1997/math_calculation/internal/math_utils"
 )
 
 // CompiledExpression 预编译表达式结构体

@@ -5,10 +5,11 @@ import (
 
 	"github.com/shopspring/decimal"
 
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/croe"
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/debug"
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/validator"
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/math_config"
+	"github.com/ZHOUXING1997/math_calculation/math_config"
+
+	"github.com/ZHOUXING1997/math_calculation/internal/croe"
+	"github.com/ZHOUXING1997/math_calculation/internal/debug"
+	"github.com/ZHOUXING1997/math_calculation/internal/validator"
 )
 
 // Calculator 计算器结构体，支持链式API

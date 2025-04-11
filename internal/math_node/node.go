@@ -5,7 +5,7 @@ import (
 
 	"github.com/shopspring/decimal"
 
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/math_config"
+	"github.com/ZHOUXING1997/math_calculation/math_config"
 )
 
 // Node 表达式节点接口

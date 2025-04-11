@@ -7,10 +7,10 @@ import (
 
 	"github.com/shopspring/decimal"
 
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation"
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/croe"
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/math_func"
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/math_config"
+	"github.com/ZHOUXING1997/math_calculation"
+	"github.com/ZHOUXING1997/math_calculation/internal/croe"
+	"github.com/ZHOUXING1997/math_calculation/internal/math_func"
+	"github.com/ZHOUXING1997/math_calculation/math_config"
 )
 
 func TestPerformance(t *testing.T) {

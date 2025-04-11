@@ -3,7 +3,7 @@ package validator
 import (
 	"testing"
 
-	"gitlab.ops.haochezhu.club/mutual_public/go-mutual-common/math_calculation/internal/math_utils"
+	"github.com/ZHOUXING1997/math_calculation/internal/math_utils"
 )
 
 func TestValidateExpression(t *testing.T) {
@@ -266,32 +266,42 @@ func TestValidateFunctions(t *testing.T) {
 		{
 			name:       "函数在允许列表中",
 			expression: "sin(x) + cos(y)",
-			options:    ValidationOptions{MaxExpressionLength: 1000, AllowedFunctions: []string{"sin", "cos"}, MaxFunctionArguments: 10},
-			wantErr:    false,
+			options: ValidationOptions{
+				MaxExpressionLength: 1000, AllowedFunctions: []string{"sin", "cos"}, MaxFunctionArguments: 10,
+			},
+			wantErr: false,
 		},
 		{
 			name:       "函数不在允许列表中",
 			expression: "sin(x) + tan(y)",
-			options:    ValidationOptions{MaxExpressionLength: 1000, AllowedFunctions: []string{"sin", "cos"}, MaxFunctionArguments: 10},
-			wantErr:    true,
+			options: ValidationOptions{
+				MaxExpressionLength: 1000, AllowedFunctions: []string{"sin", "cos"}, MaxFunctionArguments: 10,
+			},
+			wantErr: true,
 		},
 		{
 			name:       "函数在禁止列表中",
 			expression: "sin(x) + cos(y)",
-			options:    ValidationOptions{MaxExpressionLength: 1000, DisallowedFunctions: []string{"cos"}, MaxFunctionArguments: 10},
-			wantErr:    true,
+			options: ValidationOptions{
+				MaxExpressionLength: 1000, DisallowedFunctions: []string{"cos"}, MaxFunctionArguments: 10,
+			},
+			wantErr: true,
 		},
 		{
 			name:       "嵌套函数调用",
 			expression: "sin(cos(x))",
-			options:    ValidationOptions{MaxExpressionLength: 1000, AllowedFunctions: []string{"sin", "cos"}, MaxFunctionArguments: 10},
-			wantErr:    false,
+			options: ValidationOptions{
+				MaxExpressionLength: 1000, AllowedFunctions: []string{"sin", "cos"}, MaxFunctionArguments: 10,
+			},
+			wantErr: false,
 		},
 		{
 			name:       "复杂表达式中的函数",
 			expression: "sin(x) + (cos(y) * tan(z))",
-			options:    ValidationOptions{MaxExpressionLength: 1000, DisallowedFunctions: []string{"tan"}, MaxFunctionArguments: 10},
-			wantErr:    true,
+			options: ValidationOptions{
+				MaxExpressionLength: 1000, DisallowedFunctions: []string{"tan"}, MaxFunctionArguments: 10,
+			},
+			wantErr: true,
 		},
 	}
 
