@@ -382,6 +382,124 @@ func TestValidateNumberLength(t *testing.T) {
 	}
 }
 
+func TestSimplifyConsecutiveOperators(t *testing.T) {
+	tests := []struct {
+		name       string
+		expression string
+		want       string
+	}{
+		{
+			name:       "正常表达式",
+			expression: "x + y * z",
+			want:       "x + y * z",
+		},
+		{
+			name:       "连续加号",
+			expression: "x ++ y",
+			want:       "x + y",
+		},
+		{
+			name:       "连续减号",
+			expression: "x -- y",
+			want:       "x + y",
+		},
+		{
+			name:       "加减运算符",
+			expression: "x +- y",
+			want:       "x - y",
+		},
+		{
+			name:       "减加运算符",
+			expression: "x -+ y",
+			want:       "x - y",
+		},
+		{
+			name:       "多个连续运算符",
+			expression: "x +-+-+- y",
+			want:       "x - y",
+		},
+		{
+			name:       "表达式开头的连续运算符",
+			expression: "+-+-+x",
+			want:       "x",
+		},
+		{
+			name:       "表连续运算符开头的负号",
+			expression: "-+-+-x",
+			want:       "-x",
+		},
+		{
+			name:       "表达式结尾的连续运算符",
+			expression: "x+-+-+",
+			want:       "x+",
+		},
+		{
+			name:       "表达式结尾的连续负号",
+			expression: "x+-+-",
+			want:       "x-",
+		},
+		{
+			name:       "括号后的连续运算符",
+			expression: "(x)+-y",
+			want:       "(x)-y",
+		},
+		{
+			name:       "括号内的连续运算符",
+			expression: "(x +- y) * z",
+			want:       "(x - y) * z",
+		},
+		{
+			name:       "复杂表达式中的连续运算符",
+			expression: "(867255+-440375)-426878",
+			want:       "(867255-440375)-426878",
+		},
+		{
+			name:       "函数参数中的连续运算符",
+			expression: "max(5,+-3)",
+			want:       "max(5,-3)",
+		},
+		{
+			name:       "三个运算符",
+			expression: "x +++ y",
+			want:       "x + y",
+		},
+		{
+			name:       "四个运算符",
+			expression: "x ++++ y",
+			want:       "x + y",
+		},
+		{
+			name:       "五个运算符",
+			expression: "x +++++ y",
+			want:       "x + y",
+		},
+		{
+			name:       "三个负号",
+			expression: "x --- y",
+			want:       "x - y",
+		},
+		{
+			name:       "四个负号",
+			expression: "x ---- y",
+			want:       "x + y",
+		},
+		{
+			name:       "五个负号",
+			expression: "x ----- y",
+			want:       "x - y",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := SimplifyConsecutiveOperators(tt.expression)
+			if got != tt.want {
+				t.Errorf("SimplifyConsecutiveOperators() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestSanitizeExpression(t *testing.T) {
 	tests := []struct {
 		name       string
@@ -417,6 +535,41 @@ func TestSanitizeExpression(t *testing.T) {
 			name:       "包含非UTF-8字符",
 			expression: "x + y\xFFz",
 			want:       "x + yz",
+		},
+		{
+			name:       "连续加号",
+			expression: "x ++ y",
+			want:       "x + y",
+		},
+		{
+			name:       "连续减号",
+			expression: "x -- y",
+			want:       "x + y",
+		},
+		{
+			name:       "加减运算符",
+			expression: "x +- y",
+			want:       "x - y",
+		},
+		{
+			name:       "减加运算符",
+			expression: "x -+ y",
+			want:       "x - y",
+		},
+		{
+			name:       "多个连续运算符",
+			expression: "x +-+-+- y",
+			want:       "x - y",
+		},
+		{
+			name:       "括号内的连续运算符",
+			expression: "(x +- y) * z",
+			want:       "(x - y) * z",
+		},
+		{
+			name:       "复杂表达式中的连续运算符",
+			expression: "(867255+-440375)-426878",
+			want:       "(867255-440375)-426878",
 		},
 	}
 
