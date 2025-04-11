@@ -371,16 +371,14 @@ func SimplifyConsecutiveOperators(expression string) string {
 				}
 			}
 
-			// 根据负号的奇偶性决定结果
-			suffix := "+"
-			// 特殊处理表达式 "x+-+-"
-			if expression == "x+-+-" {
-				return "x-"
+			// 如果表达式以运算符结尾，则移除运算符
+			// 这是因为表达式不应该以运算符结尾
+			if lastNonOpIndex < 0 {
+				// 如果表达式只有运算符
+				return ""
 			}
-			if negativeCount%2 == 1 {
-				suffix = "-" // 奇数个负号等于负号
-			}
-			return expression[:lastNonOpIndex+1] + suffix
+			// 直接返回非运算符部分
+			return expression[:lastNonOpIndex+1]
 		}
 	}
 
