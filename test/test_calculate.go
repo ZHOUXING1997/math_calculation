@@ -1,3 +1,5 @@
+//go:build calculate
+
 package main
 
 import (
