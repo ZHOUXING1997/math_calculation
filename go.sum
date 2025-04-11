@@ -1,0 +1,4 @@
+github.com/shopspring/decimal v1.4.0 h1:bxl37RwXBklmTi0C79JfXCEBD1cqqHt0bbgBAGFp81k=
+github.com/shopspring/decimal v1.4.0/go.mod h1:gawqmDU56v4yIKSwfBSFip1HdCCXN8/+DMd9qYNcwME=
+gitlab.ops.haochezhu.club/mutual_public/go-mutual-common v0.0.10 h1:FrwIQn+M92t8+A4EzvxQ4nV2t8oyLi45Eb92rWZqTp0=
+gitlab.ops.haochezhu.club/mutual_public/go-mutual-common v0.0.10/go.mod h1:eq5Tqdf2WmnBaa25cKQeqUQc+AunrB/y+ejEF1w8Jn0=
