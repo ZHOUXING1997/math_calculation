@@ -89,11 +89,39 @@ func (p *Parser) Parse(expression string) (math_node.Node, error) {
 
 	// 检查是否有未消耗的标记
 	if p.pos < len(p.tokens) {
+		// 尝试解析剩余的表达式
 		token := p.tokens[p.pos]
-		return nil, &internal.ParseError{
-			Pos:     token.Pos,
-			Message: fmt.Sprintf("意外的标记: %s", token.Value),
-			Cause:   internal.ErrInvalidExpression,
+		if token.Type == TokenMinus || token.Type == TokenPlus {
+			// 如果是加号或减号，尝试将其作为二元运算符处理
+			p.pos++
+			right, err := p.parseExpr()
+			if err != nil {
+				return nil, err
+			}
+
+			// 使用对象池获取BinaryOpNode
+			binaryNode := GetBinaryOpNode()
+			binaryNode.Left = node
+			binaryNode.Operator = token.Value
+			binaryNode.Right = right
+			binaryNode.Pos = token.Pos
+			node = binaryNode
+
+			// 继续检查是否还有未消耗的标记
+			if p.pos < len(p.tokens) {
+				token = p.tokens[p.pos]
+				return nil, &internal.ParseError{
+					Pos:     token.Pos,
+					Message: fmt.Sprintf("意外的标记: %s", token.Value),
+					Cause:   internal.ErrInvalidExpression,
+				}
+			}
+		} else {
+			return nil, &internal.ParseError{
+				Pos:     token.Pos,
+				Message: fmt.Sprintf("意外的标记: %s", token.Value),
+				Cause:   internal.ErrInvalidExpression,
+			}
 		}
 	}
 

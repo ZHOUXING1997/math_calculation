@@ -134,7 +134,21 @@ func (l *Lexer) Lex(input string) []Token {
 		}
 
 		// 检查数字
-		if math_utils.IsDigit(bytes[pos]) || (bytes[pos] == '-' && pos+1 < len_bytes && math_utils.IsDigit(bytes[pos+1])) {
+		// 处理负数的情况：
+		// 1. 如果是以'-'开头且后面是数字
+		// 2. 或者前一个标记是运算符或左括号，且当前是'-'后跟数字
+		isNegativeNumber := false
+		if bytes[pos] == '-' && pos+1 < len_bytes && math_utils.IsDigit(bytes[pos+1]) {
+			// 检查是否是表达式开头或前一个标记是运算符或左括号
+			if len(tokens) == 0 || tokens[len(tokens)-1].Type == TokenPlus ||
+				tokens[len(tokens)-1].Type == TokenMinus || tokens[len(tokens)-1].Type == TokenAsterisk ||
+				tokens[len(tokens)-1].Type == TokenSlash || tokens[len(tokens)-1].Type == TokenCaret ||
+				tokens[len(tokens)-1].Type == TokenLParen || tokens[len(tokens)-1].Type == TokenComma {
+				isNegativeNumber = true
+			}
+		}
+
+		if math_utils.IsDigit(bytes[pos]) || isNegativeNumber {
 			start := pos
 			// 处理负号
 			if bytes[pos] == '-' {
