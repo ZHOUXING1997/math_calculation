@@ -8,8 +8,10 @@ import (
 type PrecisionMode int
 
 const (
+	// TruncatePrecision 截断（直接截断，不进行舍入）
+	TruncatePrecision PrecisionMode = iota
 	// RoundPrecision 四舍五入
-	RoundPrecision PrecisionMode = iota
+	RoundPrecision
 	// CeilPrecision 向上取整
 	CeilPrecision
 	// FloorPrecision 向下取整
@@ -21,7 +23,7 @@ type CalcConfig struct {
 	MaxRecursionDepth int           // 最大递归深度
 	Timeout           time.Duration // 执行超时时间
 	Precision         int32         // 计算精度
-	PrecisionMode     PrecisionMode // 精度设置方式（四舍五入、向上取整、向下取整）
+	PrecisionMode     PrecisionMode // 精度设置方式（四舍五入、向上取整、向下取整、截断）
 	// 每一步都控制，可以最大限度的控制溢出问题
 	// 1/3 + 1/3 + 1/3，ture = 0.9999999999，false = 1
 	ApplyPrecisionEachStep bool      // 是否在每一步应用精度控制
@@ -39,7 +41,7 @@ func NewDefaultCalcConfig() *CalcConfig {
 		MaxRecursionDepth:      100,
 		Timeout:                time.Second * 5,
 		Precision:              10,
-		PrecisionMode:          RoundPrecision, // 默认使用四舍五入
+		PrecisionMode:          TruncatePrecision,
 		ApplyPrecisionEachStep: true,
 		UseExprCache:           true,
 		UseLexerCache:          true,

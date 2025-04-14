@@ -35,7 +35,7 @@ func TestNumberNode_Eval(t *testing.T) {
 			name:   "小数值-应用精度控制",
 			node:   &NumberNode{Value: decimal.NewFromFloat(123.456)},
 			config: &math_config.CalcConfig{ApplyPrecisionEachStep: true, Precision: 2},
-			want:   decimal.NewFromFloat(123.46),
+			want:   decimal.NewFromFloat(123.45),
 		},
 		{
 			name:   "整数值-不应用精度控制",
@@ -65,7 +65,7 @@ func TestNumberNode_Eval(t *testing.T) {
 			name:   "负数值",
 			node:   &NumberNode{Value: decimal.NewFromFloat(-123.456)},
 			config: &math_config.CalcConfig{ApplyPrecisionEachStep: true, Precision: 2},
-			want:   decimal.NewFromFloat(-123.46),
+			want:   decimal.NewFromFloat(-123.45),
 		},
 	}
 

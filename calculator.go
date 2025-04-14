@@ -64,6 +64,12 @@ func (c *Calculator) WithFloorPrecision() *Calculator {
 	return c
 }
 
+// WithTruncatePrecision 设置精度模式为截断（直接截断，不进行舍入）
+func (c *Calculator) WithTruncatePrecision() *Calculator {
+	c.config.PrecisionMode = math_config.TruncatePrecision
+	return c
+}
+
 // WithTimeout 设置超时时间
 func (c *Calculator) WithTimeout(timeout time.Duration) *Calculator {
 	c.config.Timeout = timeout

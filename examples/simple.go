@@ -87,6 +87,7 @@ func main() {
 	// 只在最终结果控制精度
 	finalResult, _ := math_calculation.NewCalculator(nil).
 		WithPrecisionFinalResult().
+		WithPrecision(10).
 		Calculate(complexExpr)
 	fmt.Printf("只在最终结果控制精度 (1/3 + 1/3 + 1/3): %s\n", finalResult)
 

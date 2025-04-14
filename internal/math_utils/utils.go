@@ -88,6 +88,8 @@ func CheckContext(ctx context.Context, maxDepth int) error {
 // SetPrecision 根据精度设置方式应用精度控制
 func SetPrecision(d decimal.Decimal, precision int32, mode math_config.PrecisionMode) decimal.Decimal {
 	switch mode {
+	case math_config.TruncatePrecision:
+		return math_func.TruncateToPlaces(d, precision)
 	case math_config.RoundPrecision:
 		return math_func.RoundToPlaces(d, precision)
 	case math_config.CeilPrecision:
@@ -95,7 +97,7 @@ func SetPrecision(d decimal.Decimal, precision int32, mode math_config.Precision
 	case math_config.FloorPrecision:
 		return math_func.FloorToPlaces(d, precision)
 	default:
-		return math_func.RoundToPlaces(d, precision) // 默认使用四舍五入
+		return math_func.TruncateToPlaces(d, precision) // 默认使用截断模式
 	}
 }
 

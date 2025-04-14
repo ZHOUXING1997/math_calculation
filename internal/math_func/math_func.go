@@ -165,3 +165,13 @@ func FloorToPlaces(d decimal.Decimal, places int32) decimal.Decimal {
 	scaledValue := d.Mul(scale).Floor()
 	return scaledValue.Div(scale)
 }
+
+// TruncateToPlaces 截断到指定小数位（直接截断，不进行舍入）
+func TruncateToPlaces(d decimal.Decimal, places int32) decimal.Decimal {
+	if places < 0 {
+		return d
+	}
+
+	// 使用decimal包的Truncate方法
+	return d.Truncate(places)
+}

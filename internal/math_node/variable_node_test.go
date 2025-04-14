@@ -50,7 +50,7 @@ func TestVariableNode_Eval(t *testing.T) {
 			node:    &VariableNode{VarName: "z", Pos: 0},
 			vars:    vars,
 			config:  config,
-			want:    decimal.NewFromFloat(123.46),
+			want:    decimal.NewFromFloat(123.45),
 			wantErr: false,
 		},
 		{

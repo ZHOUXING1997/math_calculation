@@ -107,10 +107,11 @@ func TestCompiledExpression_WithConfig(t *testing.T) {
 		return
 	}
 
-	// 使用每步控制精度
+	// 使用每步控制精度，使用截断模式
 	config1 := math_config.NewDefaultCalcConfig()
 	config1.Precision = 2
 	config1.ApplyPrecisionEachStep = true
+	config1.PrecisionMode = math_config.TruncatePrecision
 
 	compiled.WithConfig(config1)
 
@@ -120,10 +121,11 @@ func TestCompiledExpression_WithConfig(t *testing.T) {
 		return
 	}
 
-	// 使用只在最终结果控制精度
+	// 使用只在最终结果控制精度，使用四舍五入模式
 	config2 := math_config.NewDefaultCalcConfig()
 	config2.Precision = 2
 	config2.ApplyPrecisionEachStep = false
+	config2.PrecisionMode = math_config.RoundPrecision
 
 	compiled.WithConfig(config2)
 
@@ -228,9 +230,9 @@ func TestCompiledExpression_WithPrecisionFinalResult(t *testing.T) {
 		return
 	}
 
-	// 结果应该等于1
-	if !result.Equal(decimal.NewFromInt(1)) {
-		t.Errorf("WithPrecisionFinalResult() should produce exactly 1, got %v", result)
+	// 结果应该等于0.9999999999
+	if !result.Equal(decimal.NewFromFloat(0.9999999999)) {
+		t.Errorf("WithPrecisionFinalResult() should produce exactly 0.9999999999, got %v", result)
 	}
 }
 

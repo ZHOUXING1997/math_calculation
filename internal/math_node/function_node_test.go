@@ -92,7 +92,7 @@ func TestFunctionNode_Eval(t *testing.T) {
 			name:    "round函数-两个参数",
 			node:    &FunctionNode{FuncName: "round", Args: []Node{num5, num3}, Pos: 0},
 			config:  config,
-			want:    decimal.NewFromFloat(123.46),
+			want:    decimal.NewFromFloat(123.45),
 			wantErr: false,
 		},
 		{
@@ -130,7 +130,7 @@ func TestFunctionNode_Eval(t *testing.T) {
 			name:    "ceil函数-两个参数",
 			node:    &FunctionNode{FuncName: "ceil", Args: []Node{num5, num3}, Pos: 0},
 			config:  config,
-			want:    decimal.NewFromFloat(123.46),
+			want:    decimal.NewFromFloat(123.45),
 			wantErr: false,
 		},
 		{
@@ -160,7 +160,7 @@ func TestFunctionNode_Eval(t *testing.T) {
 			name:    "floor函数-两个参数",
 			node:    &FunctionNode{FuncName: "floor", Args: []Node{num5, num3}, Pos: 0},
 			config:  config,
-			want:    decimal.NewFromFloat(123.46),
+			want:    decimal.NewFromFloat(123.45),
 			wantErr: false,
 		},
 		{

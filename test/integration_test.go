@@ -175,9 +175,9 @@ func TestPrecisionStrategies(t *testing.T) {
 		return
 	}
 
-	// 只在最终结果控制精度应该产生精确的1
-	if !result2.Equal(decimal.NewFromInt(1)) {
-		t.Errorf("Final result precision strategy should produce exactly 1, got %v", result2)
+	// 只在最终结果控制精度应该产生精确的0.9999999999
+	if !result2.Equal(decimal.NewFromFloat(0.9999999999)) {
+		t.Errorf("Final result precision strategy should produce exactly 0.9999999999, got %v", result2)
 	}
 }
 
@@ -313,7 +313,7 @@ func TestPrecisionControl(t *testing.T) {
 			expression:             "1/3 + 1/3 + 1/3",
 			applyPrecisionEachStep: false,
 			precision:              10,
-			want:                   decimal.NewFromInt(1),
+			want:                   decimal.NewFromFloat(0.9999999999),
 		},
 	}
 

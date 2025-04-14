@@ -264,6 +264,36 @@ func TestSetPrecision(t *testing.T) {
 			precisionMode: math_config.FloorPrecision,
 			want:          decimal.NewFromFloat(-123.46),
 		},
+
+		// 截断模式测试
+		{
+			name:          "截断-整数",
+			value:         decimal.NewFromInt(123),
+			precision:     0,
+			precisionMode: math_config.TruncatePrecision,
+			want:          decimal.NewFromInt(123),
+		},
+		{
+			name:          "截断-有小数",
+			value:         decimal.NewFromFloat(123.456),
+			precision:     2,
+			precisionMode: math_config.TruncatePrecision,
+			want:          decimal.NewFromFloat(123.45),
+		},
+		{
+			name:          "截断-刚好两位小数",
+			value:         decimal.NewFromFloat(123.45),
+			precision:     2,
+			precisionMode: math_config.TruncatePrecision,
+			want:          decimal.NewFromFloat(123.45),
+		},
+		{
+			name:          "截断-负数",
+			value:         decimal.NewFromFloat(-123.456),
+			precision:     2,
+			precisionMode: math_config.TruncatePrecision,
+			want:          decimal.NewFromFloat(-123.45),
+		},
 	}
 
 	for _, tt := range tests {

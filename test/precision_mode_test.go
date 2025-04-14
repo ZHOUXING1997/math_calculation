@@ -34,6 +34,11 @@ func TestPrecisionMode(t *testing.T) {
 			precisionMode: math_config.FloorPrecision,
 			want:          decimal.NewFromFloat(123.45),
 		},
+		{
+			name:          "截断模式",
+			precisionMode: math_config.TruncatePrecision,
+			want:          decimal.NewFromFloat(123.45),
+		},
 	}
 
 	for _, tt := range tests {
@@ -95,6 +100,18 @@ func TestPrecisionMode(t *testing.T) {
 		}
 	})
 
+	t.Run("链式API - 截断", func(t *testing.T) {
+		calc := math_calculation.NewCalculator(nil).
+			WithPrecision(precision).
+			WithTruncatePrecision().
+			WithPrecisionEachStep()
+
+		result, _ := calc.Calculate(testValue.String())
+		if !result.Equal(decimal.NewFromFloat(123.45)) {
+			t.Errorf("WithTruncatePrecision() = %v, want %v", result, decimal.NewFromFloat(123.45))
+		}
+	})
+
 	// 测试复杂表达式
 	t.Run("复杂表达式", func(t *testing.T) {
 		expression := "123.456 + 0.001" // 123.457
@@ -127,6 +144,13 @@ func TestPrecisionMode(t *testing.T) {
 			WithPrecisionEachStep()
 		resultFloor, _ := calcFloor.Calculate(expression)
 
+		// 截断
+		calcTruncate := math_calculation.NewCalculator(nil).
+			WithPrecision(precision).
+			WithTruncatePrecision().
+			WithPrecisionEachStep()
+		resultTruncate, _ := calcTruncate.Calculate(expression)
+
 		// 验证结果
 		if !resultRound.Equal(decimal.NewFromFloat(123.46)) {
 			t.Errorf("Round complex = %v, want %v", resultRound, decimal.NewFromFloat(123.46))
@@ -142,6 +166,10 @@ func TestPrecisionMode(t *testing.T) {
 
 		if !resultFloor.Equal(decimal.NewFromFloat(123.45)) {
 			t.Errorf("Floor complex = %v, want %v", resultFloor, decimal.NewFromFloat(123.45))
+		}
+
+		if !resultTruncate.Equal(decimal.NewFromFloat(123.45)) {
+			t.Errorf("Truncate complex = %v, want %v", resultTruncate, decimal.NewFromFloat(123.45))
 		}
 	})
 }
