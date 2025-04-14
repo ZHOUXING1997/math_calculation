@@ -3,9 +3,10 @@ package math_calculation_test
 import (
 	"fmt"
 
+	"github.com/shopspring/decimal"
+
 	"github.com/ZHOUXING1997/math_calculation"
 	"github.com/ZHOUXING1997/math_calculation/math_config"
-	"github.com/shopspring/decimal"
 )
 
 // This example demonstrates how to use the basic Calculate function
@@ -50,6 +51,7 @@ func Example_fluentAPI() {
 		WithVariable("x", decimal.NewFromFloat(5.0)).
 		WithPrecision(2).
 		WithRoundPrecision().
+		WithPrecisionFinalResult().
 		Calculate("sqrt(x) * 2")
 
 	if err != nil {
@@ -95,18 +97,21 @@ func Example_precisionModes() {
 	round, _ := math_calculation.NewCalculator(nil).
 		WithPrecision(2).
 		WithPrecisionMode(math_config.RoundPrecision).
+		WithPrecisionFinalResult().
 		Calculate(expr)
 
 	// Ceiling precision
 	ceil, _ := math_calculation.NewCalculator(nil).
 		WithPrecision(2).
 		WithPrecisionMode(math_config.CeilPrecision).
+		WithPrecisionFinalResult().
 		Calculate(expr)
 
 	// Floor precision
 	floor, _ := math_calculation.NewCalculator(nil).
 		WithPrecision(2).
 		WithPrecisionMode(math_config.FloorPrecision).
+		WithPrecisionFinalResult().
 		Calculate(expr)
 
 	fmt.Printf("Round: %s\n", round)
@@ -114,7 +119,7 @@ func Example_precisionModes() {
 	fmt.Printf("Floor: %s\n", floor)
 
 	// Output:
-	// Round: 1.00
-	// Ceil: 1.00
+	// Round: 1
+	// Ceil: 1
 	// Floor: 0.99
 }
