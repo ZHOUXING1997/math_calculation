@@ -32,7 +32,7 @@ push_pkg:
 	go list -m all
 
 	@echo "推送至 https://pkg.go.dev/..."
-	go list -m https://github.com/ZHOUXING1997/math_calculationn@$(TAG_NAME)
+	go list -m github.com/ZHOUXING1997/math_calculationn@$(TAG_NAME)
 
 .PHONY: help
 help:
