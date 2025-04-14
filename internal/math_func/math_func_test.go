@@ -396,3 +396,58 @@ func TestFloorToPlaces(t *testing.T) {
 		})
 	}
 }
+
+func TestTruncateToPlaces(t *testing.T) {
+	tests := []struct {
+		name   string
+		value  decimal.Decimal
+		places int32
+		want   decimal.Decimal
+	}{
+		{
+			name:   "整数",
+			value:  decimal.NewFromInt(123),
+			places: 0,
+			want:   decimal.NewFromInt(123),
+		},
+		{
+			name:   "正数截断",
+			value:  decimal.NewFromFloat(123.456),
+			places: 2,
+			want:   decimal.NewFromFloat(123.45),
+		},
+		{
+			name:   "刚好两位小数",
+			value:  decimal.NewFromFloat(123.45),
+			places: 2,
+			want:   decimal.NewFromFloat(123.45),
+		},
+		{
+			name:   "负数截断",
+			value:  decimal.NewFromFloat(-123.456),
+			places: 2,
+			want:   decimal.NewFromFloat(-123.45),
+		},
+		{
+			name:   "零小数位",
+			value:  decimal.NewFromFloat(123.456),
+			places: 0,
+			want:   decimal.NewFromInt(123),
+		},
+		{
+			name:   "负数小数位",
+			value:  decimal.NewFromFloat(123.456),
+			places: -1,
+			want:   decimal.NewFromFloat(123.456),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := TruncateToPlaces(tt.value, tt.places)
+			if !got.Equal(tt.want) {
+				t.Errorf("TruncateToPlaces() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

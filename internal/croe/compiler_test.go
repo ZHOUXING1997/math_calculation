@@ -188,6 +188,72 @@ func TestCompiledExpression_WithPrecision(t *testing.T) {
 	}
 }
 
+func TestCompiledExpression_WithPrecisionMode(t *testing.T) {
+	expression := "1/3"
+
+	compiled, err := Compile(expression, math_config.NewDefaultCalcConfig())
+	if err != nil {
+		t.Errorf("Compile() error = %v", err)
+		return
+	}
+
+	// 测试四舍五入模式
+	compiled.WithPrecision(2).WithPrecisionMode(math_config.RoundPrecision)
+
+	result1, err := compiled.Evaluate(nil)
+	if err != nil {
+		t.Errorf("CompiledExpression.Evaluate() error = %v", err)
+		return
+	}
+
+	expected1 := decimal.NewFromFloat(0.33)
+	if !result1.Equal(expected1) {
+		t.Errorf("WithPrecisionMode(RoundPrecision) = %v, want %v", result1, expected1)
+	}
+
+	// 测试向上取整模式
+	compiled.WithPrecision(2).WithPrecisionMode(math_config.CeilPrecision)
+
+	result2, err := compiled.Evaluate(nil)
+	if err != nil {
+		t.Errorf("CompiledExpression.Evaluate() error = %v", err)
+		return
+	}
+
+	expected2 := decimal.NewFromFloat(0.34)
+	if !result2.Equal(expected2) {
+		t.Errorf("WithPrecisionMode(CeilPrecision) = %v, want %v", result2, expected2)
+	}
+
+	// 测试向下取整模式
+	compiled.WithPrecision(2).WithPrecisionMode(math_config.FloorPrecision)
+
+	result3, err := compiled.Evaluate(nil)
+	if err != nil {
+		t.Errorf("CompiledExpression.Evaluate() error = %v", err)
+		return
+	}
+
+	expected3 := decimal.NewFromFloat(0.33)
+	if !result3.Equal(expected3) {
+		t.Errorf("WithPrecisionMode(FloorPrecision) = %v, want %v", result3, expected3)
+	}
+
+	// 测试截断模式
+	compiled.WithPrecision(2).WithPrecisionMode(math_config.TruncatePrecision)
+
+	result4, err := compiled.Evaluate(nil)
+	if err != nil {
+		t.Errorf("CompiledExpression.Evaluate() error = %v", err)
+		return
+	}
+
+	expected4 := decimal.NewFromFloat(0.33)
+	if !result4.Equal(expected4) {
+		t.Errorf("WithPrecisionMode(TruncatePrecision) = %v, want %v", result4, expected4)
+	}
+}
+
 func TestCompiledExpression_WithPrecisionEachStep(t *testing.T) {
 	expression := "1/3 + 1/3 + 1/3"
 
