@@ -2,6 +2,10 @@
 
 A high-performance, precise mathematical expression evaluation library for Go, supporting complex expressions, variables, and various mathematical functions.
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/ZHOUXING1997/math_calculation.svg)](https://pkg.go.dev/github.com/ZHOUXING1997/math_calculation)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ZHOUXING1997/math_calculation)](https://goreportcard.com/report/github.com/ZHOUXING1997/math_calculation)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Features
 
 - **High Precision**: Uses `decimal` package for accurate calculations without floating-point errors
@@ -22,6 +26,36 @@ A high-performance, precise mathematical expression evaluation library for Go, s
 
 ```bash
 go get github.com/ZHOUXING1997/math_calculation
+```
+
+## Quick Example
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/ZHOUXING1997/math_calculation"
+	"github.com/shopspring/decimal"
+)
+
+func main() {
+	// Calculate a simple expression
+	result, err := math_calculation.Calculate("sqrt(25) + 10", nil, nil)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("Result: %s\n", result) // Output: Result: 15
+
+	// Calculate with variables
+	vars := map[string]decimal.Decimal{
+		"x": decimal.NewFromFloat(5.0),
+	}
+	result, _ = math_calculation.Calculate("x * 2 + 3", vars, nil)
+	fmt.Printf("x * 2 + 3 = %s\n", result) // Output: x * 2 + 3 = 13
+}
 ```
 
 ## Basic Usage
@@ -216,6 +250,14 @@ calc := math_calculation.NewCalculator(nil).
 - Choose precision control strategy based on your needs:
   - `WithPrecisionEachStep()` for maximum control over potential overflow
   - `WithPrecisionFinalResult()` for more accurate results in some cases
+
+## Documentation
+
+For detailed documentation and API reference, visit [pkg.go.dev/github.com/ZHOUXING1997/math_calculation](https://pkg.go.dev/github.com/ZHOUXING1997/math_calculation)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 

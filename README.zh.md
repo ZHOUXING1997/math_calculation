@@ -2,6 +2,10 @@
 
 一个高性能、高精度的Go语言数学表达式计算库，支持复杂表达式、变量和各种数学函数。
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/ZHOUXING1997/math_calculation.svg)](https://pkg.go.dev/github.com/ZHOUXING1997/math_calculation)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ZHOUXING1997/math_calculation)](https://goreportcard.com/report/github.com/ZHOUXING1997/math_calculation)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## 功能特点
 
 - **高精度计算**：使用`decimal`包进行精确计算，避免浮点数误差
@@ -22,6 +26,36 @@
 
 ```bash
 go get github.com/ZHOUXING1997/math_calculation
+```
+
+## 快速示例
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/ZHOUXING1997/math_calculation"
+	"github.com/shopspring/decimal"
+)
+
+func main() {
+	// 计算简单表达式
+	result, err := math_calculation.Calculate("sqrt(25) + 10", nil, nil)
+	if err != nil {
+		fmt.Printf("错误: %v\n", err)
+		return
+	}
+	fmt.Printf("结果: %s\n", result) // 输出: 结果: 15
+
+	// 使用变量计算
+	vars := map[string]decimal.Decimal{
+		"x": decimal.NewFromFloat(5.0),
+	}
+	result, _ = math_calculation.Calculate("x * 2 + 3", vars, nil)
+	fmt.Printf("x * 2 + 3 = %s\n", result) // 输出: x * 2 + 3 = 13
+}
 ```
 
 ## 基本用法
@@ -216,6 +250,14 @@ calc := math_calculation.NewCalculator(nil).
 - 根据需求选择精度控制策略:
   - `WithPrecisionEachStep()` 用于最大限度控制潜在的溢出问题
   - `WithPrecisionFinalResult()` 在某些情况下可获得更准确的结果
+
+## 文档
+
+详细文档和API参考，请访问 [pkg.go.dev/github.com/ZHOUXING1997/math_calculation](https://pkg.go.dev/github.com/ZHOUXING1997/math_calculation)
+
+## 贡献
+
+欢迎贡献！请随时提交Pull Request。
 
 ## 许可证
 
