@@ -10,6 +10,7 @@ import (
 	"github.com/ZHOUXING1997/math_calculation"
 	"github.com/ZHOUXING1997/math_calculation/internal/croe"
 	"github.com/ZHOUXING1997/math_calculation/internal/math_func"
+	"github.com/ZHOUXING1997/math_calculation/internal/testutil"
 	"github.com/ZHOUXING1997/math_calculation/math_config"
 )
 
@@ -17,12 +18,17 @@ import (
 func TestPerformance(t *testing.T) {
 	fmt.Println("=== 性能测试 ===")
 
-	// 测试表达式
-	expr := "sqrt(25) * (3.14 * x + 2.5) - abs(-5) + pow(2, 3) + min(10, 5, 8) + max(3, 7, 2)"
-
-	// 变量映射
-	vars := map[string]decimal.Decimal{
-		"x": decimal.NewFromFloat(5.0),
+	// 使用testutil包中的标准测试数据
+	expr := testutil.StandardTestExpr
+	vars := testutil.StandardTestVars
+	// 验证标准测试表达式的结果
+	result, err := math_calculation.Calculate(expr, vars, math_config.NewDefaultCalcConfig())
+	if err != nil {
+		t.Errorf("Calculate() error = %v", err)
+		return
+	}
+	if !result.Equal(testutil.StandardTestResult) {
+		t.Errorf("Calculate() = %v, want %v", result, testutil.StandardTestResult)
 	}
 
 	// 测试次数

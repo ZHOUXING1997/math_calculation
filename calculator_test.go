@@ -5,6 +5,7 @@ import (
 
 	"github.com/shopspring/decimal"
 
+	"github.com/ZHOUXING1997/math_calculation/internal/testutil"
 	"github.com/ZHOUXING1997/math_calculation/internal/validator"
 	"github.com/ZHOUXING1997/math_calculation/math_config"
 )
@@ -269,6 +270,38 @@ func TestCalculatorChainAPI(t *testing.T) {
 
 		if !result.Equal(expected) {
 			t.Errorf("WithValidationOptions() = %v, want %v", result, expected)
+		}
+	})
+}
+
+// TestWithTestUtil 使用testutil包测试基本计算功能
+func TestWithTestUtil(t *testing.T) {
+	// 测试标准测试表达式
+	t.Run("StandardTestExpr", func(t *testing.T) {
+		result, err := Calculate(testutil.StandardTestExpr, testutil.StandardTestVars, nil)
+		if err != nil {
+			t.Errorf("Calculate() error = %v", err)
+			return
+		}
+		if !result.Equal(testutil.StandardTestResult) {
+			t.Errorf("Calculate() = %v, want %v", result, testutil.StandardTestResult)
+		}
+	})
+
+	// 测试标准测试用例
+	t.Run("StandardTestCases", func(t *testing.T) {
+		testCases := testutil.CreateTestCases()
+		for _, tc := range testCases {
+			t.Run(tc.Name, func(t *testing.T) {
+				result, err := Calculate(tc.Expression, tc.Vars, nil)
+				if (err != nil) != tc.WantErr {
+					t.Errorf("Calculate() error = %v, wantErr %v", err, tc.WantErr)
+					return
+				}
+				if !tc.WantErr && !result.Equal(tc.Want) {
+					t.Errorf("Calculate() = %v, want %v", result, tc.Want)
+				}
+			})
 		}
 	})
 }

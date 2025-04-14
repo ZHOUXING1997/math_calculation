@@ -3,20 +3,18 @@ package benchmark
 import (
 	"testing"
 
-	"github.com/shopspring/decimal"
-
 	"github.com/ZHOUXING1997/math_calculation"
 	"github.com/ZHOUXING1997/math_calculation/internal/croe"
+	"github.com/ZHOUXING1997/math_calculation/internal/testutil"
 	"github.com/ZHOUXING1997/math_calculation/math_config"
 )
 
-// 标准测试表达式
-const standardExpr = "sqrt(25) * (3.14 * x + 2.5) - abs(-5) + pow(2, 3) + min(10, 5, 8) + max(3, 7, 2)"
-
-// 标准变量
-var standardVars = map[string]decimal.Decimal{
-	"x": decimal.NewFromFloat(5.0),
-}
+// 使用testutil包中的标准测试数据
+var (
+	standardExpr   = testutil.StandardTestExpr
+	standardVars   = testutil.StandardTestVars
+	expectedResult = testutil.StandardTestResult
+)
 
 // BenchmarkLex 测试词法分析性能
 func BenchmarkLex(b *testing.B) {

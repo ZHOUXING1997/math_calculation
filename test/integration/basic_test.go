@@ -6,11 +6,50 @@ import (
 	"github.com/shopspring/decimal"
 
 	"github.com/ZHOUXING1997/math_calculation"
+	"github.com/ZHOUXING1997/math_calculation/internal/testutil"
 	"github.com/ZHOUXING1997/math_calculation/math_config"
 )
 
 // TestBasicIntegration 基本集成测试，测试所有组件协同工作
 func TestBasicIntegration(t *testing.T) {
+	// 首先测试testutil包中的标准测试表达式
+	t.Run("StandardTestExpr", func(t *testing.T) {
+		result, err := math_calculation.Calculate(
+			testutil.StandardTestExpr,
+			testutil.StandardTestVars,
+			math_config.NewDefaultCalcConfig(),
+		)
+		if err != nil {
+			t.Errorf("Calculate() error = %v", err)
+			return
+		}
+		if !result.Equal(testutil.StandardTestResult) {
+			t.Errorf("Calculate() = %v, want %v", result, testutil.StandardTestResult)
+		}
+	})
+
+	// 然后测试testutil包中的标准测试用例
+	t.Run("StandardTestCases", func(t *testing.T) {
+		testCases := testutil.CreateTestCases()
+		for _, tc := range testCases {
+			t.Run(tc.Name, func(t *testing.T) {
+				result, err := math_calculation.Calculate(
+					tc.Expression,
+					tc.Vars,
+					math_config.NewDefaultCalcConfig(),
+				)
+				if (err != nil) != tc.WantErr {
+					t.Errorf("Calculate() error = %v, wantErr %v", err, tc.WantErr)
+					return
+				}
+				if !tc.WantErr && !result.Equal(tc.Want) {
+					t.Errorf("Calculate() = %v, want %v", result, tc.Want)
+				}
+			})
+		}
+	})
+
+	// 然后测试其他特定用例
 	tests := []struct {
 		name       string
 		expression string
