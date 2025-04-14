@@ -28,7 +28,7 @@ func NewCalculator(cfg *math_config.CalcConfig) *Calculator {
 	}
 
 	return &Calculator{
-		config:            math_config.NewDefaultCalcConfig(),
+		config:            cfg,
 		vars:              make(map[string]decimal.Decimal),
 		validationOptions: validator.DefaultValidationOptions,
 	}
